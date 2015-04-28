@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<widget id="SwipeList.widget.SwipeList" needsEntityContext="false" xmlns="http://www.mendix.com/widget/1.0/">
+    <name>SwipeList</name>
+    <description>The description of this widget.</description>
+
+    <icon></icon>
+    <properties>
+        <property key="main" type="entity">
+            <caption>Main Object</caption>
+            <category>Data source</category>
+            <description>The searchEntity</description>
+        </property>
+
+        <property key="attrs" type="object" isList="true">
+            <caption>Attributes to display</caption>
+            <category>Data source</category>
+            <description>This object provides the search parameters.</description>
+            <properties>
+                <property key="term" type="attribute" entityProperty="../main">
+                    <caption>Search attribute</caption>
+                    <category>Data source</category>
+                    <description>This fields defines the search parameters.</description>
+                    <attributeTypes>
+                        <attributeType name="String" />
+                        <attributeType name="Integer" />
+                        <attributeType name="DateTime" />
+                        <attributeType name="Float" />
+                        <attributeType name="Boolean" />
+                        <attributeType name="Enum" />
+                    </attributeTypes>
+                </property>
+            </properties>
+        </property>
+        
+        <property key="includeLabels" type="boolean" defaultValue="true">
+            <caption>Show labels</caption>
+            <category>Data source</category>
+            <description>This will show the name of each bit of data apart from the first which is used as a title</description>
+        </property>
+
+
+        <property key="mfGetData" type="microflow" required="true" defaultValue="">
+            <caption>Microflow</caption>
+            <category>Data source</category>
+            <description>The microflow to retrieve a list of input data</description>
+            <returnType type="Object" isList="true" entityProperty="main"></returnType>
+        </property>
+        
+        <property key="general" type="microflow" required="true" entityProperty="main">
+            <caption>On Click Microflow</caption>
+            <category>Button Options</category>
+            <description>This microflow gets bound to each item and fires when clicked.</description>
+            <returnType type="Void"></returnType>
+        </property>
+
+
+        <!-- Button Options -->
+
+        <property key="buttonCount" type="boolean" defaultValue="true">
+            <caption>Two buttons or one</caption>
+            <category>Button Options</category>
+            <description>Set true for Two else false for one</description>
+        </property>
+
+        <property key="maxTrigger" type="boolean" defaultValue="true">
+            <caption>Power slide</caption>
+            <category>Button Options</category>
+            <description>Set true if you would like the microflow of button one to trigger when sliding the item a large distance.</description>
+        </property>
+
+        <property key="side" type="enumeration" defaultValue="Left">
+            <caption>Button align</caption>
+            <category>Button Options</category>
+            <description>Which side would you like the buttons?</description>
+            <enumerationValues>
+                <enumerationValue key="Left">Left</enumerationValue>
+                <enumerationValue key="Right">Right</enumerationValue>
+            </enumerationValues>
+        </property>
+
+        <property key="mfBtnOne" type="microflow" required="true" entityProperty="main">
+            <caption>Microflow for button one</caption>
+            <category>Button Options</category>
+            <description>This microflow gets bound to button one.</description>
+            <returnType type="Void"></returnType>
+        </property>
+
+        <property key="mfBtnTwo" type="microflow" required="true" entityProperty="main">
+            <caption>Microflow for button two</caption>
+            <category>Button Options</category>
+            <description>This microflow gets bound to button two.</description>
+            <returnType type="Void"></returnType>
+        </property>
+
+        <property key="buttonOneName" type="string" required="true">
+            <caption>Button one's name</caption>
+            <category>Button Options</category>
+            <description>text to appear on the first button</description>
+        </property>
+
+        <property key="buttonTwoName" type="string" required="true">
+            <caption>Button two's name</caption>
+            <category>Button Options</category>
+            <description>text to appear on the second button</description>
+        </property>
+
+
+
+
+        <!-- swipe options TODO -->
+
+    </properties>
+
+    <!-- CSS Block -->
+
+
+
+
+</widget>
+
