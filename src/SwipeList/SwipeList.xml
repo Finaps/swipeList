@@ -40,7 +40,7 @@
 
 
         <property key="mfGetData" type="microflow" required="true" defaultValue="">
-            <caption>Microflow</caption>
+            <caption>Data Source Microflow</caption>
             <category>Data source</category>
             <description>The microflow to retrieve a list of input data</description>
             <returnType type="Object" isList="true" entityProperty="main"></returnType>

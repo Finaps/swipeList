@@ -1,85 +1,59 @@
-# App Store Widget Boilerplate
+# Swipe List
 
-This boilerplate gives you all you need to start a new custom widget for Mendix 5.6.0 and up.
+This widget gives you the ability to create a list of objects that allows gestures in order to perform microflow actions to a list. 
 
-The boilerplate contains:
+##Authors
 
-- Directory structure.
-- Readme.md file.
-- License.
-- Javascript source.
-- XSD for package.xml, to configure properties of the widget, visible inside the Mendix business modeler.
+Simon Martyr
 
 ## Contributing
 
-For more information on contributing to this repository visit [Contributing to a GitHub repository](https://world.mendix.com/display/howto50/Contributing+to+a+GitHub+repository)!
+For more information on contributing to this repository visit [Github](https://github.com/Finaps/swipeList)!
+
+For feature requests/bugs/etc please leave feedback on the Github Issues Page.
 
 ## Typical usage scenario
 
-Use this template to start building a widget for Mendix 5.
-Alter this README.md file and describe what your widget does.
+This widget can be used on:
+- Desktop 
+- Tablet 
+- Phone
+
+This widget was designed with mobile in mind to work like the email app on iOS. If you wish to have an interactve list of items this widget gives you that functionality. 
  
-## Description
+## Features
 
-The javascript inside the widget has examples of:
+Main features:
 
-- Using CSS within a Widget.
-- Using templating.
-- Loading external library's.
-- DOM manipulation.
-- Event attaching.
-- Loading data.
-- Executing microflow and sending data.
-- Working with the context object (The object that is send by a contextview , for instance a dataview).
+- Display a list of objects & attributes of your choice. 
+- Ability to configure two microflow buttons.
+- Ability to configure on selection microflow.
+- Ability to configure large swipe microflow. 
+- Responsive. 
+- Customizeable can change swipe direction etc. 
 
-### Dojo AMD module list
+### Limitations
 
-The javascript contains a really extensive list of modules that may be used to build the widget. It is best to reduce this list to what is actually used. Plugins like jsLint for Notepad++ will show unused objects. **Be sure to keep the module name array and the parameter list of the anonymous function below the module list in sync!**
+ - HTML/Layout is releatively static, could maybe be enhanced in the future.
+ - Currently allows for only two buttons on left or right. Can be edited currently no plans to change this. 
 
-The following modules are necessary for all widgets:
+## Description/configuration (Widget options)
 
-- dojo/_base/declare
-- mxui/widget/_WidgetBase
-- dijit/_Widget
+Data Source 
 
-If your widget does not use an HTML template:
+- Main Object - The type of object that is used within the list.
+- Attributes to display - A list of Attributes that you wish to display, all types allowed. The first attribute is treated as a title. 
+- Data Source Microflow - The list of objects (main object) retrieved via a microflow.
+- Show labels - show the labels of the attributes within the list. Default true, toggel to false if you wish not to show the labels. The first attribute in the attribute list is always used as a title. 
 
-- Remove dijit/_TemplatedMixin from the module list
-- Remove _Templated from the parameter list of the anonymous function below the module list
-- Remove _Templated from the parameter list of the declare call
-- Remove the templates folder
+Button Options
 
-If your widget does not need jQuery:
+- Two buttons or one - default two buttons, however if you want only the one button you can change this to false to only show one button.
+- Microflow for button one - configure the microflow for button one, requires the main object to be an input. 
+- Microflow for button two - configure the microflow for button two, requires the main object to be an input. 
+- Button one's name - The name/text to appear on the button (one).
+- Button Two's name - The name/text to appear on the button (two).
+- Power Slide - When swiping an object in the list over 65% in the correct direction it will kick off the microflow bound to button one.
+- Button align - Choose which side the buttons will be displayed. (Left or right) 
+- On Click Microflow - When clicking/tapping an object this microflow with fire. 
 
-- Remove WidgetName/widget/lib/jquery from the module list
-- Remove _jQuery from the parameter list of the anonymous function below the module list
-- Remove _jQuery from the parameter list of the declare call
-- Remove jquery.js from src\WidgetName\widget\lib\ Or remove the lib folder if you don't include external libraries in the widget.
-
-## Migrating a widget to Dojo AMD
-
-A widget that uses Dojo AMD may not refer to functions like *dojo.query* etc. All necessary modules must be declared on the module list at the top of the source.
-
-Replacing all 'old' Dojo calls in an existing source can be a bit of a pain.
-
-Here is a list of commonly used functions and their AMD counterpart:
-
-Old | New
----------- |---------- 
-mxui.dom              | domMx
-dojo.byId             | dom.byId
-dojo.query            | domQuery
-dojo.forEach          | dojoArray.forEach
-dojo.hitch            | lang.hitch
-dojo.addClass         | domClass.add
-dojo.removeClass      | domClass.remove
-dojo.hasClass         | domClass.contains
-dojo.replaceClass     | domClass.replace
-dojo.empty            | domConstruct.empty
-dojo.place            | domConstruct.place 
-dojo.on               | on
-dojo.window           | win
-  
-Do not use domQuery.query! Just domQuery
-
-The referenced modules are in the module list of the boilerplate javascript

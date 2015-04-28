@@ -66,6 +66,7 @@ define([
             window.butCount = this.buttonCount;
             window.direction = this.side.toLowerCase();
             window.mfClick = this.general;
+            window.powerSlide = this.maxTrigger;
 
             this._loadList();
         },
@@ -120,7 +121,8 @@ define([
                             $(this).css("left", -distance + "px");
                         }
 
-                        if (distance > (window.butCount ? 120 : 60) && direction != window.direction) {
+                        if (distance > (window.butCount ? widthBt * 2 : widthBt) && direction != window.direction && window.powerSlide) 
+                        {
                             $(this).parent().find(".buttonOne").css("width", distance + "px");
                             $(this).parent().find(".buttonOne").css("text-align", window.direction);
                         } else {
@@ -153,7 +155,7 @@ define([
 
 
                         //max strech
-                        if (distance > (width * 0.65) && direction != window.direction) {
+                        if (distance > (width * 0.65) && direction != window.direction && window.powerSlide) {
                             mx.data.action({
                                 params: {
                                     applyto: 'selection',
