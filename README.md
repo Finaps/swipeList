@@ -4,7 +4,7 @@ This widget gives you the ability to create a list of objects that allows gestur
 
 ##Authors
 
-Simon Martyr
+Simon Martyr -  [email](mailto:simon.martyr@finaps.nl)   - [github](https://github.com/simonmartyr)
 
 ## Contributing
 
