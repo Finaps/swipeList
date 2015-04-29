@@ -14,6 +14,10 @@ For feature requests/bugs/etc please leave feedback on the Github Issues Page.
 
 ## Typical usage scenario
 
+
+<img src="assets/overallSwipe.PNG"/>
+
+
 This widget can be used on:
 - Desktop 
 - Tablet 
@@ -49,11 +53,11 @@ Power slide:
 - Ability to configure on selection microflow.
 - Ability to configure large swipe microflow. 
 - Responsive. 
-- Customizeable can change swipe direction etc. 
+- Customizable can change swipe direction etc. 
 
 ### Limitations
 
- - HTML/Layout is releatively static, could maybe be enhanced in the future.
+ - HTML/Layout is relatively static, could maybe be enhanced in the future.
  - Currently allows for only two buttons on left or right. Can be edited currently no plans to change this. 
 
 ## Description/configuration (Widget options)
@@ -63,7 +67,7 @@ Data Source
 - Main Object - The type of object that is used within the list.
 - Attributes to display - A list of Attributes that you wish to display, all types allowed. The first attribute is treated as a title. 
 - Data Source Microflow - The list of objects (main object) retrieved via a microflow.
-- Show labels - show the labels of the attributes within the list. Default true, toggel to false if you wish not to show the labels. The first attribute in the attribute list is always used as a title. 
+- Show labels - show the labels of the attributes within the list. Default true, toggle to false if you wish not to show the labels. The first attribute in the attribute list is always used as a title. 
 
 Button Options
 
