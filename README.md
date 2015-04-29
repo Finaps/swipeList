@@ -28,11 +28,14 @@ Main features:
 Default list:
 <img src="assets/listone.PNG"/>
 
+
 Option buttons:
 <img src="assets/listview2.PNG"/>
 
+
 Power slide:
 <img src="assets/StrechAction.PNG"/>
+
 
 - Display a list of objects & attributes of your choice. 
 - Ability to configure two microflow buttons.
