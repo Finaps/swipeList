@@ -25,15 +25,22 @@ This widget was designed with mobile in mind to work like the email app on iOS. 
 
 Main features:
 
+
 Default list:
+
+
 <img src="assets/listone.PNG"/>
 
 
 Option buttons:
+
+
 <img src="assets/listview2.PNG"/>
 
 
 Power slide:
+
+
 <img src="assets/StrechAction.PNG"/>
 
 
