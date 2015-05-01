@@ -1,6 +1,8 @@
 # Swipe List
 
-This widget gives you the ability to create a list of objects that allows gestures in order to perform microflow actions to a list. 
+This widget gives you the ability to create a list of objects that allows gestures in order to perform Microflow actions to a list. 
+Some Inbox application have a really nice ListView where users can swipe right to mark the email done or to display some buttons. 
+With this widget it is possible to recreate this User interface functionality, allowing a you to use gestures on a list.
 
 ##Authors
 
@@ -29,6 +31,13 @@ This widget was designed with mobile in mind to work like the email app on iOS. 
 
 Main features:
 
+- Display a list of objects & attributes of your choice. 
+- Ability to configure two Microflow buttons.
+- Ability to configure on selection Microflow.
+- Ability to configure large swipe Microflow. 
+- Responsive. 
+- Customizable can change swipe direction etc. 
+
 
 Default list:
 
@@ -48,12 +57,7 @@ Power slide:
 <img src="assets/StrechAction.PNG"/>
 
 
-- Display a list of objects & attributes of your choice. 
-- Ability to configure two microflow buttons.
-- Ability to configure on selection microflow.
-- Ability to configure large swipe microflow. 
-- Responsive. 
-- Customizable can change swipe direction etc. 
+
 
 ### Limitations
 
@@ -66,17 +70,51 @@ Data Source
 
 - Main Object - The type of object that is used within the list.
 - Attributes to display - A list of Attributes that you wish to display, all types allowed. The first attribute is treated as a title. 
-- Data Source Microflow - The list of objects (main object) retrieved via a microflow.
+- Data Source Microflow - The list of objects (main object) retrieved via a Microflow.
 - Show labels - show the labels of the attributes within the list. Default true, toggle to false if you wish not to show the labels. The first attribute in the attribute list is always used as a title. 
 
 Button Options
 
 - Two buttons or one - default two buttons, however if you want only the one button you can change this to false to only show one button.
-- Microflow for button one - configure the microflow for button one, requires the main object to be an input. 
-- Microflow for button two - configure the microflow for button two, requires the main object to be an input. 
+- Microflow for button one - configure the Microflow for button one, requires the main object to be an input. 
+- Microflow for button two - configure the Microflow for button two, requires the main object to be an input. 
 - Button one's name - The name/text to appear on the button (one).
 - Button Two's name - The name/text to appear on the button (two).
-- Power Slide - When swiping an object in the list over 65% in the correct direction it will kick off the microflow bound to button one.
+- Power Slide - When swiping an object in the list over 65% in the correct direction it will kick off the Microflow bound to button one.
 - Button align - Choose which side the buttons will be displayed. (Left or right) 
-- On Click Microflow - When clicking/tapping an object this microflow with fire. 
+- On Click Microflow - When clicking/tapping an object this Microflow with fire. 
 
+
+## Styling - CSS Classes & HTML build up
+
+HTML build up:
+
+
+```HTML
+<div class="swipe list">
+	<ul>
+		<li>
+			<div class="behind">
+				<button guid="guid" class="btn btn-primary buttonOne"> Button Text </button>
+				<button guid="guid" class="btn btn-primary buttonTwo"> Button Text </button>
+			</div>
+			<div class="swipeItem" guid="guid">content</div>
+		</li>
+	</ul>
+</div>
+```
+
+Note: 
+Buttons are set at default of 60px width. You can change this and the javascript should continue to function as normal. 
+The CSS used is .swipe button feel free to overwrite this however you wish. 
+
+Class List: 
+
+- .behind - This is the main class for controlling the swipe item controls. Postion must be set to absolute for this widget to continue to work.
+- .swipeItem - This is the main content of your swipe item. 
+- .btn - Using the standard bootstrap, should use your default styling of btn. 
+- .btn-primary - Using the standard bootstrap. Should use your default styling of btn.
+- .buttonOne - class for button one.
+- .buttonTwo - class for button two.
+- .swipe - container class.
+- .list  - container class.
