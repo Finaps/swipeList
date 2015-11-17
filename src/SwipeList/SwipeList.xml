@@ -38,13 +38,6 @@
             <description>This will show the name of each bit of data apart from the first which is used as a title</description>
         </property>
 
-
-        <property key="mfGetData" type="microflow" required="true" defaultValue="">
-            <caption>Data Source Microflow</caption>
-            <category>Data source</category>
-            <description>The microflow to retrieve a list of input data</description>
-            <returnType type="Object" isList="true" entityProperty="main"></returnType>
-        </property>
         
         <property key="general" type="microflow" required="true" entityProperty="main">
             <caption>On Click Microflow</caption>
