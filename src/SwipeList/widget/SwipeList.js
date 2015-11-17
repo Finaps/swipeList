@@ -54,21 +54,37 @@ define([
 
         // dojo.declare.constructor is called to construct the widget instance. Implement to initialize non-primitive properties.
         constructor: function () {
-            this._handles = [];
+            this._handles = []; //subscriptions
         },
 
         // dijit._WidgetBase.postCreate is called after constructing the widget. Implement to do extra setup work.
         postCreate: function () {
             console.log(this.id + '.postCreate');
+            //this._makeItem();
+            //this._setupEvents();
+        },
 
-            window.mfBtnOne = this.mfBtnOne;
-            window.mfBtnTwo = this.mfBtnTwo;
-            window.butCount = this.buttonCount;
-            window.direction = this.side.toLowerCase();
-            window.mfClick = this.general;
-            window.powerSlide = this.maxTrigger;
+        update: function (obj, callback) {
+            console.log(this.id + ".update");
 
-            this._loadList();
+            this._contextObj = obj;
+            this._resetSubscriptions();
+            this._makeItem();
+
+            callback();
+        },
+
+        swipeResources: function () {
+            var swipeListRes = {};
+            swipeListRes['mfBtnOne'] = this.mfBtnOne;
+            swipeListRes['mfBtnTwo'] = this.mfBtnTwo;
+            swipeListRes['buttonCount'] = this.buttonCount;
+            swipeListRes['direction'] = this.side.toLowerCase();
+            swipeListRes['mfClick'] = this.general;
+            swipeListRes['powerSlide'] = this.maxTrigger;
+
+            return swipeListRes;
+
         },
 
 
@@ -88,19 +104,20 @@ define([
         // Attach events to HTML dom elements
         _setupEvents: function () {
             console.log("hit event settup");
+            var ele = $(this.domNode).find(".swipeItem");
             //settup button events + swipe events. 
+            $(this.domNode).unbind();  //reset binds 
+
+            var options = this.swipeResources();
 
             if (!this.buttonCount) {
                 $(".buttonTwo").remove();
             }
 
-
-            $(".swipe").find("button").css("float", window.direction);
-
-
-
+            $(".swipe").find("button").css("float", options["direction"]);
+            
             //swipper settup
-            $(".swipeItem").swipe({
+            $(ele).swipe({
                 triggerOnTouchEnd: true,
                 swipeStatus: function (event, phase, direction, distance) {
 
@@ -121,10 +138,9 @@ define([
                             $(this).css("left", -distance + "px");
                         }
 
-                        if (distance > (window.butCount ? widthBt * 2 : widthBt) && direction != window.direction && window.powerSlide) 
-                        {
+                        if (distance > (options["buttonCount"] ? widthBt * 2 : widthBt) && direction != options["direction"] && options["powerSlide"]) {
                             $(this).parent().find(".buttonOne").css("width", distance + "px");
-                            $(this).parent().find(".buttonOne").css("text-align", window.direction);
+                            $(this).parent().find(".buttonOne").css("text-align", options["direction"]);
                         } else {
                             $(this).parent().find(".buttonOne").css("width", "");
                             $(this).parent().find(".buttonOne").css("text-align", "");
@@ -137,7 +153,7 @@ define([
                             mx.data.action({
                                 params: {
                                     applyto: 'selection',
-                                    actionname: window.mfClick,
+                                    actionname: options["mfClick"],
                                     guids: [$(this).attr('guid')]
                                 },
                                 /*callback: function (obj) {
@@ -155,11 +171,11 @@ define([
 
 
                         //max strech
-                        if (distance > (width * 0.65) && direction != window.direction && window.powerSlide) {
+                        if (distance > (width * 0.65) && direction != options["direction"] && options["powerSlide"]) {
                             mx.data.action({
                                 params: {
                                     applyto: 'selection',
-                                    actionname: window.mfBtnOne,
+                                    actionname: options["mfBtnOne"],
                                     guids: [$(this).attr('guid')]
                                 },
                                 /*callback: function (obj) {
@@ -181,28 +197,28 @@ define([
 
                         //normal swipe. 
                         if (direction == "right") {
-                            if (window.butCount) {
-                                if (window.direction == "left") {
+                            if (options["buttonCount"]) {
+                                if (options["direction"] == "left") {
                                     $(this).css("left", (widthBt * 2) + "px");
                                 } else {
                                     $(this).css("left", "");
                                 }
                             } else {
-                                if (window.direction == "left") {
+                                if (options["direction"] == "left") {
                                     $(this).css("left", widthBt + "px");
                                 } else {
                                     $(this).css("left", "");
                                 }
                             }
                         } else if (direction == "left") {
-                            if (window.butCount) {
-                                if (window.direction != "left") {
+                            if (options["buttonCount"]) {
+                                if (options["direction"] != "left") {
                                     $(this).css("left", "-" + (widthBt * 2) + "px");
                                 } else {
                                     $(this).css("left", "");
                                 }
                             } else {
-                                if (window.direction != "left") {
+                                if (options["direction"] != "left") {
                                     $(this).css("left", "-" + widthBt + "px");
                                 } else {
                                     $(this).css("left", "");
@@ -222,7 +238,7 @@ define([
                 mx.data.action({
                     params: {
                         applyto: 'selection',
-                        actionname: window.mfBtnOne,
+                        actionname: options["mfBtnOne"],
                         guids: [$(this).attr('guid')]
                     },
                     /*callback: function (obj) {
@@ -240,7 +256,7 @@ define([
                     mx.data.action({
                         params: {
                             applyto: 'selection',
-                            actionname: window.mfBtnTwo,
+                            actionname: options["mfBtnTwo"],
                             guids: [$(this).attr('guid')]
                         },
                         /*callback: function (obj) {
@@ -254,6 +270,87 @@ define([
                 });
 
             }
+        },
+
+
+        _resetSubscriptions: function () {
+            // Release handles on previous object, if any.
+            if (this._handles) {
+                dojoArray.forEach(this._handles, function (handle) {
+                    mx.data.unsubscribe(handle);
+                });
+
+
+                this._handles = [];
+            }
+
+            if (this._contextObj) {
+
+                var objectHandle = mx.data.subscribe({
+                    guid: this._contextObj.getGuid(),
+                    callback: lang.hitch(this, function (guid) {
+                        console.log("ItemUpdated"); //this._makeItem();
+                    })
+                });
+                
+                 var validationHandle = mx.data.subscribe({
+                    guid: this._contextObj.getGuid(),
+                    val: true,
+                    callback: lang.hitch(this, this._makeItem())
+                });
+                
+                  var attrHandle = mx.data.subscribe({
+                    guid: this._contextObj.getGuid(),
+                    attr: this.attrs[0]['term'],
+                    callback: lang.hitch(this, function(guid, attr, attrValue) {
+                        console.log("hit update"); //this._updateRendering();
+                    })
+                });
+
+            }
+
+            this._handles = [objectHandle, validationHandle, attrHandle];
+
+        },
+
+        _makeItem: function () {
+            var attrsList = this.attrs,
+                hold, contentBuild = '';
+            if (this._contextObj !== null) {
+                for (var j in attrsList) {
+                    contentBuild += '<span class="contLines ';
+                    contentBuild += j == 0 ? 'firstCont' : '';
+                    contentBuild += ' "> ';
+                    contentBuild += this.includeLabels && j != 0 ? attrsList[j]['term'] + ": " : "";
+                    if (typeof this._contextObj.get(attrsList[j]['term']) == "number") {
+                        var dateObj = new Date(this._contextObj.get(attrsList[j]['term']))
+                        contentBuild += dateObj.toLocaleDateString() + '</span><br/>';
+                    } else {
+                        contentBuild += this._contextObj.get(attrsList[j]['term']) + '</span><br/>';
+                    }
+                }
+                hold = widgetTemplate.split('{{content}}').join(contentBuild);
+                hold = hold.split('{{one}}').join(this.buttonOneName);
+                hold = hold.split('{{two}}').join(this.buttonTwoName);
+                hold = hold.split('{{guid}}').join(this._contextObj.getGuid());
+               
+                
+                /*if($(".swipe").length != 0){
+                    $(this.domNode).remove();
+                    $(".swipe ul").append(hold); 
+                }*/
+                //else{
+                     hold = totalList.split('{{listItems}}').join(hold); 
+                    $(this.domNode).html(hold); 
+                //}
+                
+                console.log("item added"); 
+
+            } else {
+                //$(this.domNode).hide();
+            }
+            
+            this._setupEvents(); 
         },
 
 
@@ -271,21 +368,22 @@ define([
                     for (var i in objs) {
                         contentBuild = '';
                         for (var j in attrsList) {
-                            contentBuild += '<span class="contLines '; 
-                            contentBuild += j==0 ? 'firstCont' : '';
-                            contentBuild += ' "> ';  
-                            contentBuild += this.includeLabels && j != 0 ? attrsList[j]['term'] + ": " : "" ; 
-                            if( typeof objs[i].get(attrsList[j]['term']) == "number"){
-                                var dateObj = new Date ( objs[i].get(attrsList[j]['term']) )
+                            contentBuild += '<span class="contLines ';
+                            contentBuild += j == 0 ? 'firstCont' : '';
+                            contentBuild += ' "> ';
+                            contentBuild += this.includeLabels && j != 0 ? attrsList[j]['term'] + ": " : "";
+                            if (typeof objs[i].get(attrsList[j]['term']) == "number") {
+                                var dateObj = new Date(objs[i].get(attrsList[j]['term']))
                                 contentBuild += dateObj.toLocaleDateString() + '</span><br/>';
-                            }
-                            else{
+                            } else {
                                 contentBuild += objs[i].get(attrsList[j]['term']) + '</span><br/>';
                             }
                         }
                         hold = widgetTemplate.split('{{content}}').join(contentBuild);
                         hold = hold.split('{{guid}}').join(objs[i].getGuid());
                         _listOfAll += hold;
+
+
                     }
                     totalList = totalList.split('{{listItems}}').join(_listOfAll);
                     totalList = totalList.split('{{one}}').join(this.buttonOneName);
@@ -293,7 +391,7 @@ define([
                     $(this.domNode).html(totalList);
 
                     console.log("call back of data");
-                    this._setupEvents();
+                    
                 })
             });
 
