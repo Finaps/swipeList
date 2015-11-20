@@ -17,7 +17,7 @@ For feature requests/bugs/etc please leave feedback on the Github Issues Page.
 ## Typical usage scenario
 
 
-<img src="assets/overallSwipe.PNG"/>
+<img src="https://raw.githubusercontent.com/Finaps/swipeList/master/assets/overallSwipe.PNG"/>
 
 
 This widget can be used on:
@@ -42,19 +42,19 @@ Main features:
 Default list:
 
 
-<img src="assets/listone.PNG"/>
+<img src="https://raw.githubusercontent.com/Finaps/swipeList/master/assets/listone.PNG"/>
 
 
 Option buttons:
 
 
-<img src="assets/listview2.PNG"/>
+<img src="https://raw.githubusercontent.com/Finaps/swipeList/master/assets/listview2.PNG"/>
 
 
 Power slide:
 
 
-<img src="assets/StrechAction.PNG"/>
+<img src="https://raw.githubusercontent.com/Finaps/swipeList/master/assets/StrechAction.PNG"/>
 
 
 
